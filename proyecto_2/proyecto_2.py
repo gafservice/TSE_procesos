@@ -13,19 +13,8 @@ img_array = cv2.imread("train/0/Training_63181.jpg")
 Datadirectory = "train/" #training dataset
 Classes = ["0", "1", "2", "3", "4", "5", "6"] #lista de clases
 
-#for category in Classes:
-    #path = os.path.join(Datadirectory, category)
-    #for img in os.listdir(path):
-        #img_array = cv2.imread(os.path.join(path,img))
-        #plt.imshow(cv2.cvtColor(img_array,cv2.COLOR_BGR2RGB))
-        #plt.show()
-        #break
-   # break
-
 img_size = 224
 new_array = cv2.resize(img_array, (img_size, img_size)) #pasa la imagen de 48x48 a 224x224
-#plt.imshow(cv2.cvtColor(new_array, cv2.COLOR_BGR2RGB))
-#plt.show()
 
 #leemos todas las imagenes y las convertimos en arreglos
 
@@ -46,7 +35,7 @@ def create_training_Data():
 
 
 create_training_Data()  #ejecuta la funcion anterior y carga las imagenes en el arreglo
-#print(len(training_Data))
+
 random.shuffle(training_Data)
 
 #Se guardan los features
@@ -58,7 +47,6 @@ for features,label in training_Data:
 
 X = np.array(X).reshape(-1,img_size,img_size,3) #pasando a 4 dimensiones
 X = X/255.0 #se normalizan los features
-print(X)
 
 #Deep learning model
 
@@ -78,6 +66,7 @@ new_model.compile(loss="sparse_categorical_crossentropy", optimizer = "adam", me
 #Se entrena el modelo con 25 epocas y se guarda en una archivo
 new_model.fit(X,Y, epochs= 25)
 new_model.save('my_model_93p33.h5')
+#--------------------------------------------------------------------------------------------------------------------
 new_model = tf.keras.models.load_model('my_model_93p33.h5')
 
 #prueba final con imagenes y Preprocesamiento de imagen
